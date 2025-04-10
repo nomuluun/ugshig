@@ -36,7 +36,7 @@ export default function Scoreboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-teal-900 flex flex-col items-center justify-center py-8 text-white">
+      <div className="min-h-screen bg-[#004643] flex flex-col items-center justify-center py-8 text-white">
         <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
         <p className="mt-4 text-lg text-white">Уншиж байна...</p>
       </div>
@@ -47,7 +47,7 @@ export default function Scoreboard() {
     return <div className="text-red-500 text-center mt-4">Error: {error}</div>;
   }
   return (
-    <div className="min-h-screen  bg-teal-900 flex flex-col items-center  text-white">
+    <div className="min-h-screen  bg-[#004643] flex flex-col items-center  text-white">
       <Menu />
       <div className="p-6  text-white  text-3xl font-bold text-center tracking-wide mb-6">
         Үгшигийн онооны самбар

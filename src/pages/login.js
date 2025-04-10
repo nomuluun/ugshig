@@ -47,7 +47,7 @@ export default function Login() {
   };
 
   return (
-    <div className="h-[100vh] w-full flex flex-col p-10 justify-center items-center bg-teal-900">
+    <div className="h-[100vh] w-full flex flex-col p-10 justify-center items-center bg-[#004643]">
       <div className="mb-8 drop-shadow-[0_0_10px_white] hover:drop-shadow-[0_0_20px_white] transition-all duration-300 ease-in-out text-center">
         <Logo className="w-32 h-32 mx-auto" />
       </div>

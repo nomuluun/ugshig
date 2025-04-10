@@ -22,7 +22,7 @@ export default function Home() {
   }, [user]);
   if (loading) {
     return (
-      <div className="flex items-center bg-teal-900 justify-center h-screen">
+      <div className="flex items-center bg-[#004643] justify-center h-screen">
         <div className="text-xl font-semibold animate-pulse text-gray-500">
           Ачаалж байна...
         </div>

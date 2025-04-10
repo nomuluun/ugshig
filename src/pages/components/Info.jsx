@@ -46,7 +46,7 @@ export default function Info() {
     fetchData();
   }, [user]);
   return (
-    <div className="min-h-screen  bg-teal-900   text-white">
+    <div className="min-h-screen  bg-[#0F3F3C]   text-white">
       <Menu />
       <div className="min-h-screen bg-[#0F3F3C] flex flex-col items-center text-white font-sans">
         <div className="mt-16 text-center">
