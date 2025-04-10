@@ -1,61 +1,26 @@
-const { createContext, useState, useContext } = require("react");
+const { createContext, useContext, useState, useEffect } = require("react");
 
 const UserContext = createContext();
+
 const UserProvider = ({ children }) => {
-  const [user, setUser] = useState({
-    id: "12s0305",
-    name: "Nomu-Luun",
-    class: 12,
-    buleg: "b",
-    score: 0,
-    streak: 0,
-    task: [
-      {
-        id: "juramUg",
-        name: "Журамласан үг",
-        lvl1: false,
-        lvl2: false,
-        lvl3: false,
-      },
-      {
-        id: "aldaaUg",
-        name: "Алдаатай үг",
-        lvl1: false,
-        lvl2: false,
-        lvl3: false,
-      },
-      {
-        id: "ugHargalzuulah",
-        name: "Үгийг тайлбартай харгалзуулах",
-        lvl1: false,
-        lvl2: false,
-        lvl3: false,
-      },
-      {
-        id: "heltsUg",
-        name: "Хэлц үгс",
-        lvl1: false,
-        lvl2: false,
-        lvl3: false,
-      },
-      {
-        id: "zuvUg",
-        name: "Зөв үгийг олоорой",
-        lvl1: false,
-        lvl2: false,
-        lvl3: false,
-      },
-      {
-        id: "duremNuhuh",
-        name: "Дүрмийг нөхөж бич",
-        lvl1: false,
-        lvl2: false,
-        lvl3: false,
-      },
-    ],
-  });
+  const [user, setUser] = useState(null);
+  const [testUser, setTestUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      // Safely access localStorage on the client side
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+      if (storedUser) {
+        setUser(storedUser); // Set the user from localStorage if it exists
+      }
+      setLoading(false);
+    }
+  }, []);
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider
+      value={{ user, setUser, testUser, setTestUser, loading }}
+    >
       {children}
     </UserContext.Provider>
   );

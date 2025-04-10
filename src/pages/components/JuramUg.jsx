@@ -6,31 +6,20 @@ import { useRouter } from "next/router";
 
 export default function JuramUg() {
   const { user, setUser } = useUser();
-  const [score, setScore] = useState(0); //onoo
-  const [index, setIndex] = useState(0); //index
-  const [selectedIndex, setSelectedIndex] = useState(null); //songosn hariult
-  const [questions, setQuestions] = useState([]); //asuultuud/ugs
-  const [showFinal, setShowFinal] = useState(false); //nuhtsul
-  const [userAnswers, setUserAnswers] = useState([]); //useriin songosn hariultuud
-  const [timeLeft, setTimeLeft] = useState(10); //hugatsaa
-  const [isAnswerClickable, setIsAnswerClickable] = useState(true);
-  const [next, setNext] = useState(false); //nuhtsul
+  const [score, setScore] = useState(0); // Score
+  const [index, setIndex] = useState(0); // Index
+  const [selectedIndex, setSelectedIndex] = useState(null); // Selected answer
+  const [questions, setQuestions] = useState([]); // Questions
+  const [showFinal, setShowFinal] = useState(false); // Final state
+  const [userAnswers, setUserAnswers] = useState([]); // User answers
+  const [timeLeft, setTimeLeft] = useState(10); // Timer
+  const [isAnswerClickable, setIsAnswerClickable] = useState(true); // Answer clickable state
+  const [next, setNext] = useState(false); // Next step state
+  const [isLoading, setIsLoading] = useState(false); // Loading state
   const router = useRouter();
 
   const { juramround } = useJuramLevelContext();
   const { juramdata } = useDataJuramContext();
-
-  //console.log("juram user ", user);
-
-  useEffect(() => {
-    if (showFinal) {
-      if (score == 5) {
-        user.task[0][`lvl${juramround}`] = true;
-      }
-      if (juramround === 3 && score < 5) return;
-      user.score = user.score + score * juramround * 12;
-    }
-  }, [showFinal]);
 
   useEffect(() => {
     const shuffledQuestions = [...juramdata]
@@ -42,8 +31,70 @@ export default function JuramUg() {
 
     setQuestions(shuffledQuestions);
   }, []);
-  // shuffle of question and choice
 
+  useEffect(() => {
+    if (showFinal) {
+      if (score == 5) {
+        user.task[0][`lvl${juramround}`] = true;
+      }
+      if (juramround === 3 && score < 5) return;
+      user.score = user.score + score * juramround * 12;
+
+      setIsLoading(true); // Show loading indicator before making the request
+
+      fetch("/api/user", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          _id: user._id,
+          score: user.score,
+          task: user.task,
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to update user score");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("updateUser=", user);
+          setUser(user);
+          localStorage.setItem("user", JSON.stringify(user));
+        })
+        .catch((error) => {
+          console.error("Error updating user:", error);
+        })
+        .finally(() => {
+          setIsLoading(false); // Hide loading indicator once the request is completed
+        });
+    }
+  }, [showFinal]);
+
+  // Timer countdown
+  useEffect(() => {
+    if (showFinal || juramround === 1 || next === 1) return;
+    if (timeLeft <= 0) {
+      handleSubmit(0, -1);
+      setIsAnswerClickable(false);
+      return;
+    }
+    const interval = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [timeLeft]);
+
+  // Handle answer submission
   const handleSubmit = (onoo, ind) => {
     if (selectedIndex !== null || !isAnswerClickable) return; // Prevent clicking after time runs out or already selected
 
@@ -71,7 +122,7 @@ export default function JuramUg() {
       setSelectedIndex(null);
       setTimeLeft(10);
       setIsAnswerClickable(true);
-      if (onoo == 0 && juramround === 3) setShowFinal(1);
+      if (onoo == 0 && juramround === 3) setShowFinal(true);
       if (index >= 4) {
         setShowFinal(true);
       } else {
@@ -79,47 +130,42 @@ export default function JuramUg() {
       }
     }, 1000);
   };
-  // Check answers
 
-  useEffect(() => {
-    if (showFinal || juramround === 1 || next === 1) return;
-    if (timeLeft <= 0) {
-      handleSubmit(0, -1);
-      setIsAnswerClickable(false);
-      return;
-    }
-    const interval = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(interval);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [timeLeft]);
-  // countdown timer
-
+  // Format timer
   const formatTime = (seconds) => {
     const mins = String(Math.floor(seconds / 60)).padStart(2, "0");
     const secs = String(seconds % 60).padStart(2, "0");
     return `${mins}:${secs}`;
   };
-  // format time
 
+  // Go to the next question
   const resTime = (score, ind) => {
     setNext(true);
     handleSubmit(score, ind);
     setTimeLeft(0);
   };
-  // next sub
 
+  // Loading state conditionally renders before returning anything else
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-[#194b44]">
+        <div className="text-center text-white">
+          <p className="text-lg font-semibold">
+            Updating your score, please wait...
+          </p>
+          <div className="mt-4 flex justify-center items-center">
+            {/* Loading spinner */}
+            <div className="w-16 h-16 border-4 border-t-4 border-[#f3bf66] border-solid rounded-full animate-spin"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show final state if questions are finished
   if (!questions.length) return null;
 
   const progressPercent = (index / 5) * 100;
-
   return (
     <div className="min-h-screen bg-[#194b44] flex flex-col items-center justify-center">
       {!showFinal ? (

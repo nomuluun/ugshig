@@ -23,7 +23,7 @@ export default function WordleClone() {
   const wordl = asuult[index]?.word?.toUpperCase() || "";
   const def = asuult[index]?.definition || "";
   const Wlength = wordl.length;
-
+  const formattedDef = def.charAt(0).toUpperCase() + def.slice(1);
   const handleChange = (e) => {
     if (finished) return;
     const val = e.target.value.toUpperCase();
@@ -112,7 +112,7 @@ export default function WordleClone() {
             Үгийн тайлбар
           </h1>
           <p className="text-white flex items-center justify-center text-2xl mb-10">
-            {def}
+            {formattedDef}
           </p>
         </div>
       )}
@@ -137,16 +137,21 @@ export default function WordleClone() {
         <div className="fixed inset-0 flex justify-center items-center">
           <div className="absolute w-full h-[100vh] top-0 z-[-1] bg-black opacity-70"></div>
           <div className="bg-[#F9BC60] p-6 rounded-xl max-w-md w-full text-center opacity-100">
-            <h2 className="text-[#004643] text-xl font-extrabold mb-4">
+            <h2 className="text-[#004643] text-3xl font-extrabold mb-4">
               Өнөөдрийн үг:
             </h2>
-            <h3 className="text-[#001E1D] text-3xl font-semibold mb-4">
+            <h3 className="text-[#001E1D] text-4xl font-semibold mb-15">
               {wordl}
             </h3>
-            <p className="text-[#004643] text-lg mb-6">Үгийн тайлбар: {def}</p>
+            <p className="text-[#004643] text-3xl font-extrabold mb-1">
+              Үгийн тайлбар:
+            </p>
+            <p className="text-[#004643] text-3xl font-semibold mb-4">
+              {formattedDef}
+            </p>
             <button
               onClick={closeModal}
-              className="text-white bg-[#004643] p-2 rounded-md font-extrabold"
+              className="text-xl text-white bg-[#004643] text-black p-2 rounded-md font-extrabold mt-6"
             >
               Хаах
             </button>

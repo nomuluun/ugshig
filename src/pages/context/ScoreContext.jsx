@@ -9,6 +9,7 @@ const ScoreProvider = ({ children }) => {
   const [resultQ, setResultQ] = useState([]);
   const [level, setLevel] = useState(0);
   const [percent, setpercent] = useState(0);
+  const [category, setCategory] = useState(null);
   // const router = useRouter() huudas shiljuuleh
   // router.push("/")
   return (
@@ -22,6 +23,8 @@ const ScoreProvider = ({ children }) => {
         setLevel,
         percent,
         setpercent,
+        category,
+        setCategory,
       }}
     >
       {children}

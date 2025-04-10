@@ -8,21 +8,19 @@ export default function Home() {
   const { round, setRound } = useLevelContext();
   const { user, setUser } = useUser();
   const { onoo, resultQ, level, percent } = useScoreContext();
-
+  const { category, setCategory } = useScoreContext();
   useEffect(() => {
     if (onoo === percent) {
+      let updateUser = user;
       if (round == 1) {
-        let updateUser = user;
         updateUser.task[1].lvl1 = true;
         setUser(updateUser);
       }
       if (round == 2) {
-        let updateUser = user;
         updateUser.task[1].lvl2 = true;
         setUser(updateUser);
       }
       if (round == 3) {
-        let updateUser = user;
         updateUser.task[1].lvl3 = true;
         setUser(updateUser);
       }

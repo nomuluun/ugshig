@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { useJuramLevelContext } from "../context/JuramLevelContext";
 import { useTailbarLevelContext } from "../context/TailbarLevelContext";
 import { useKheltsLevelContext } from "../context/KheltsLevelContext";
+import { useScoreContext } from "../context/ScoreContext";
 export default function Path({ props, lvl }) {
   const { user } = useUser();
   const { setRound } = useLevelContext();
@@ -16,41 +17,50 @@ export default function Path({ props, lvl }) {
   const { setJuramRound } = useJuramLevelContext();
   const { setTailbarRound } = useTailbarLevelContext(); //tvshin
   const { setKheltsRound } = useKheltsLevelContext();
+  const { category, setCategory } = useScoreContext();
+
   const router = useRouter();
   console.log("task=", task);
   console.log("pops=", props);
   useEffect(() => {
-    let a = user.task.filter((data) => data.id == props);
+    console.log("usa=", user);
+    let a = user?.task.filter((data) => data.id == props);
     console.log("user=", a);
-    setTask(...a);
+    a != null ? setTask(...a) : setTask(null);
   }, []);
   function handleTask(ind) {
-    console.log("task=", task);
+    // console.log("task=", task);
 
     if (task.id == "aldaaUg") {
+      setCategory("aldaaUg");
       setRound(ind);
       router.push("/uguulber");
     }
     if (task.id == "juramUg") {
+      setCategory("juramUg");
       setJuramRound(ind);
       router.push("/juram");
     }
     if (task.id == "ugHargalzuulah") {
+      setCategory("ugHargalzuulah");
       // alert("hi");
       setTailbarRound(ind);
       router.push("/tailbarug");
     }
     if (task.id == "heltsUg") {
       // alert("hi");
+      setCategory("heltsUg");
       setKheltsRound(ind);
       router.push("/heltsug");
     }
     if (task.id == "zuvUg") {
+      setCategory("heltsUg");
       // alert("hi");
       setJuramRound(ind);
       router.push("/zuvug");
     }
     if (task.id == "duremNuhuh") {
+      setCategory("duremNuhuh");
       // alert("hi");
       setKheltsRound(ind);
       router.push("/duremnuhuh");

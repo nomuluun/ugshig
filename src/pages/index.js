@@ -3,7 +3,10 @@ import UgshigIcon from "./components/svg/UgshigIcon";
 import ModuleDurem from "./components/ModuleDurem";
 import ModuleUtga from "./components/ModuleUtga";
 import ModuleZuv from "./components/ModuleZuv";
+import { useUser } from "./context/UserContext";
 export default function Home() {
+  const { user } = useUser();
+  console.log(user);
   return (
     <div className=" w-[100%] bg-[#004643] min-h-screen flex flex-col items-center just">
       <Menu />
