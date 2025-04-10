@@ -27,7 +27,7 @@ export default function Path({ props, lvl }) {
     let a = user?.task.filter((data) => data.id == props);
     console.log("user=", a);
     a != null ? setTask(...a) : setTask(null);
-  }, []);
+  }, [user]);
   function handleTask(ind) {
     // console.log("task=", task);
 
