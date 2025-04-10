@@ -184,7 +184,7 @@ export default function TailbarUg() {
   const progressPercent = showFinal ? 100 : (currentIndex / 16) * 100;
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center min-h-screen bg-[#194b44]">
+      <div className="flex justify-center items-center min-h-screen bg-[#004643]">
         <div className="text-center text-white">
           <p className="text-lg font-semibold">Уншиж байна...</p>
           <div className="mt-4 flex justify-center items-center">
@@ -273,37 +273,49 @@ export default function TailbarUg() {
 function FinalResult({ score, wrongAnswers, router }) {
   return (
     <div className="flex flex-col items-center gap-4 p-4">
-      <h1 className="text-3xl font-bold mb-4">Дууслаа!</h1>
-      <h2 className="text-2xl font-semibold">Таны оноо: {score} / 16</h2>
+      <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center">
+        Дууслаа!
+      </h1>
+      <h2 className="text-2xl md:text-3xl font-semibold text-center">
+        Таны оноо: {score} / 16
+      </h2>
+
       {wrongAnswers.length > 0 && (
-        <div className="mt-4 text-center">
-          <h3 className="text-lg font-bold mb-2">Буруу байсан үгс:</h3>
-          <table className="min-w-full table-auto text-left border border-[#ABD1C6]">
-            <thead className="bg-[#004643] text-white">
-              <tr>
-                <th className="py-2 px-4 border-b">Үг</th>
-                <th className="py-2 px-4 border-b">Тайлбар</th>
-              </tr>
-            </thead>
-            <tbody className="bg-[#F5F5F5]">
-              {wrongAnswers.map((item, index) => (
-                <tr
-                  key={index}
-                  className="border-b border-[#ABD1C6] hover:bg-[#D3E7E1]"
-                >
-                  <td className="py-2 px-4">{item.word}</td>
-                  <td className="py-2 px-4">{item.meaning}</td>
+        <div className="mt-4 text-center w-full">
+          <h3 className="text-lg md:text-xl font-bold mb-2">
+            Буруу байсан үгс:
+          </h3>
+          <div className="overflow-x-auto">
+            <table className="min-w-full table-auto text-left border border-[#ABD1C6]">
+              <thead className="bg-[#004643] text-white">
+                <tr>
+                  <th className="py-2 px-4 border-b whitespace-nowrap">Үг</th>
+                  <th className="py-2 px-4 border-b whitespace-nowrap">
+                    Тайлбар
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="bg-[#F5F5F5]">
+                {wrongAnswers.map((item, index) => (
+                  <tr
+                    key={index}
+                    className="border-b border-[#ABD1C6] hover:bg-[#D3E7E1]"
+                  >
+                    <td className="py-2 px-4">{item.word}</td>
+                    <td className="py-2 px-4">{item.meaning}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
-      <div className="flex justify-between w-[670px]">
+
+      <div className="flex justify-center md:justify-between w-full max-w-xl mt-4">
         <div></div>
         <button
           onClick={() => router.push("/ugutga")}
-          className="text-[#F2C26B] font-black text-15px px-6 py-2 hover:opacity-90"
+          className="text-[#F2C26B] font-black text-sm md:text-base px-4 md:px-6 py-2 hover:opacity-90"
         >
           ← ГАРАХ
         </button>

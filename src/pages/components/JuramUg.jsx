@@ -148,7 +148,7 @@ export default function JuramUg() {
   // Loading state conditionally renders before returning anything else
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center min-h-screen bg-[#194b44]">
+      <div className="flex justify-center items-center min-h-screen bg-[#004643]">
         <div className="text-center text-white">
           <p className="text-lg font-semibold">Уншиж байна...</p>
           <div className="mt-4 flex justify-center items-center">
@@ -165,7 +165,7 @@ export default function JuramUg() {
 
   const progressPercent = (index / 5) * 100;
   return (
-    <div className="min-h-screen bg-[#194b44] flex flex-col items-center justify-center">
+    <div className="min-h-screen bg-[#004643] flex flex-col items-center justify-center">
       {!showFinal ? (
         <div>
           <div className="flex flex-col p-4 text-white rounded-b-3xl text-center items-center justify-center">
@@ -184,7 +184,7 @@ export default function JuramUg() {
             )}
           </div>
 
-          <div className="p-6 bg-[#194b44] text-white flex flex-col gap-4">
+          <div className="p-6 bg-[#004643] text-white flex flex-col gap-4">
             <h2 className="text-center font-bold text-lg">
               Зөв бичсэн үгийг олно уу.
             </h2>
@@ -194,10 +194,11 @@ export default function JuramUg() {
                 const isSelected = selectedIndex === ind;
                 const isCorrect = data.score === 1;
 
-                let buttonColor = "bg-gray-200 hover:bg-gray-300";
+                let buttonColor = "bg-[#ecf0f1] hover:[#bdc3c7]";
                 if (selectedIndex !== null) {
-                  if (isSelected && isCorrect) buttonColor = "bg-green-400";
-                  else if (isSelected && !isCorrect) buttonColor = "bg-red-400";
+                  if (isSelected && isCorrect) buttonColor = "bg-[#2ecc71]";
+                  else if (isSelected && !isCorrect)
+                    buttonColor = "bg-[#e74c3c]";
                 }
 
                 return (

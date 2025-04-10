@@ -134,7 +134,7 @@ export default function WordleClone() {
   };
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center min-h-screen bg-[#194b44]">
+      <div className="flex justify-center items-center min-h-screen bg-[#004643]">
         <div className="text-center text-white">
           <p className="text-lg font-semibold">Уншиж байна...</p>
           <div className="mt-4 flex justify-center items-center">
