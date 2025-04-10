@@ -150,9 +150,7 @@ export default function Zuvug() {
     return (
       <div className="flex justify-center items-center min-h-screen bg-[#194b44]">
         <div className="text-center text-white">
-          <p className="text-lg font-semibold">
-            Updating your score, please wait...
-          </p>
+          <p className="text-lg font-semibold">Уншиж байна...</p>
           <div className="mt-4 flex justify-center items-center">
             {/* Loading spinner */}
             <div className="w-16 h-16 border-4 border-t-4 border-[#f3bf66] border-solid rounded-full animate-spin"></div>
