@@ -272,37 +272,38 @@ export default function TailbarUg() {
 
 function FinalResult({ score, wrongAnswers, router }) {
   return (
-    <div className="flex flex-col items-center gap-4 p-4">
-      <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center">
+    <div className="flex text-[#fff] flex-col items-center gap-4 p-4">
+      <h1 className="text-[#fff] text-3xl md:text-4xl font-bold mb-4 text-center">
         Дууслаа!
       </h1>
-      <h2 className="text-2xl md:text-3xl font-semibold text-center">
+      <h2 className="text-[#fff] text-2xl md:text-3xl font-semibold text-center">
         Таны оноо: {score} / 16
       </h2>
 
       {wrongAnswers.length > 0 && (
         <div className="mt-4 text-center w-full">
-          <h3 className="text-lg md:text-xl font-bold mb-2">
+          <h3 className="text-lg text-[#fff] md:text-xl font-bold mb-2">
             Буруу байсан үгс:
           </h3>
           <div className="overflow-x-auto">
-            <table className="min-w-full table-auto text-left border border-[#ABD1C6]">
-              <thead className="bg-[#004643] text-white">
+            <table className="w-full text-left border border-[#ABD1C6] rounded-lg overflow-hidden">
+              <thead className="bg-[#256353]">
                 <tr>
-                  <th className="py-2 px-4 border-b whitespace-nowrap">Үг</th>
-                  <th className="py-2 px-4 border-b whitespace-nowrap">
+                  <th className="py-2 px-4 border-b border-[#ABD1C6]">Үг</th>
+                  <th className="py-2 px-4 border-b border-[#ABD1C6]">
                     Тайлбар
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-[#F5F5F5]">
+              <tbody>
                 {wrongAnswers.map((item, index) => (
-                  <tr
-                    key={index}
-                    className="border-b border-[#ABD1C6] hover:bg-[#D3E7E1]"
-                  >
-                    <td className="py-2 px-4">{item.word}</td>
-                    <td className="py-2 px-4">{item.meaning}</td>
+                  <tr key={index} className="bg-[#12352f] hover:bg-[#17493f]">
+                    <td className="py-2 px-4 border-b border-[#ABD1C6]">
+                      {item.word}
+                    </td>
+                    <td className="py-2 px-4 border-b border-[#ABD1C6]">
+                      {item.meaning}
+                    </td>
                   </tr>
                 ))}
               </tbody>

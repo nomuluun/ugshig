@@ -40,7 +40,7 @@ export default function Path({ props, lvl }) {
         setRound(ind);
         router.push("/uguulber");
       } else {
-        alert("Tugjeetei");
+        alert("Та өмнөх үеийг давна уу");
       }
     }
     if (task.id == "juramUg") {
@@ -53,7 +53,7 @@ export default function Path({ props, lvl }) {
         setJuramRound(ind);
         router.push("/juram");
       } else {
-        alert("Tugjeetei");
+        alert("Та өмнөх үеийг давна уу");
       }
     }
     if (task.id == "ugHargalzuulah") {
@@ -67,7 +67,7 @@ export default function Path({ props, lvl }) {
         setTailbarRound(ind);
         router.push("/tailbarug");
       } else {
-        alert("Tugjeetei");
+        alert("Та өмнөх үеийг давна уу");
       }
     }
     if (task.id == "heltsUg") {
@@ -81,7 +81,7 @@ export default function Path({ props, lvl }) {
         setKheltsRound(ind);
         router.push("/heltsug");
       } else {
-        alert("Tugjeetei");
+        alert("Та өмнөх үеийг давна уу");
       }
     }
     if (task.id == "zuvUg") {
@@ -95,7 +95,7 @@ export default function Path({ props, lvl }) {
         setJuramRound(ind);
         router.push("/zuvug");
       } else {
-        alert("Tugjeetei");
+        alert("Та өмнөх үеийг давна уу");
       }
     }
     if (task.id == "duremNuhuh") {
@@ -109,7 +109,7 @@ export default function Path({ props, lvl }) {
         setKheltsRound(ind);
         router.push("/duremnuhuh");
       } else {
-        alert("Tugjeetei");
+        alert("Та өмнөх үеийг давна уу");
       }
     }
     // if (task.id == "")
