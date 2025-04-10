@@ -31,7 +31,7 @@ export default function Path({ props, lvl }) {
   function handleTask(ind) {
     // console.log("task=", task);
     if (task.id == "aldaaUg") {
-      if ((ind == 2 && task.lvl1) || (ind == 3 && task.lvl2)) {
+      if (ind == 1 || (ind == 2 && task.lvl1) || (ind == 3 && task.lvl2)) {
         setCategory("aldaaUg");
         setRound(ind);
         router.push("/uguulber");
@@ -40,7 +40,7 @@ export default function Path({ props, lvl }) {
       }
     }
     if (task.id == "juramUg") {
-      if ((ind == 2 && task.lvl1) || (ind == 3 && task.lvl2)) {
+      if (ind == 1 || (ind == 2 && task.lvl1) || (ind == 3 && task.lvl2)) {
         setCategory("juramUg");
         setJuramRound(ind);
         router.push("/juram");
@@ -49,7 +49,7 @@ export default function Path({ props, lvl }) {
       }
     }
     if (task.id == "ugHargalzuulah") {
-      if ((ind == 2 && task.lvl1) || (ind == 3 && task.lvl2)) {
+      if (ind == 1 || (ind == 2 && task.lvl1) || (ind == 3 && task.lvl2)) {
         setCategory("ugHargalzuulah");
         // alert("hi");
         setTailbarRound(ind);
@@ -59,7 +59,7 @@ export default function Path({ props, lvl }) {
       }
     }
     if (task.id == "heltsUg") {
-      if ((ind == 2 && task.lvl1) || (ind == 3 && task.lvl2)) {
+      if (ind == 1 || (ind == 2 && task.lvl1) || (ind == 3 && task.lvl2)) {
         // alert("hi");
         setCategory("heltsUg");
         setKheltsRound(ind);
@@ -69,7 +69,7 @@ export default function Path({ props, lvl }) {
       }
     }
     if (task.id == "zuvUg") {
-      if ((ind == 2 && task.lvl1) || (ind == 3 && task.lvl2)) {
+      if (ind == 1 || (ind == 2 && task.lvl1) || (ind == 3 && task.lvl2)) {
         setCategory("heltsUg");
         // alert("hi");
         setJuramRound(ind);
@@ -79,7 +79,7 @@ export default function Path({ props, lvl }) {
       }
     }
     if (task.id == "duremNuhuh") {
-      if ((ind == 2 && task.lvl1) || (ind == 3 && task.lvl2)) {
+      if (ind == 1 || (ind == 2 && task.lvl1) || (ind == 3 && task.lvl2)) {
         setCategory("duremNuhuh");
         // alert("hi");
         setKheltsRound(ind);

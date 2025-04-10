@@ -176,7 +176,7 @@ export default function Zuvug() {
               <span>ДҮРМИЙН ҮГС</span>
               <span>ТҮВШИН {juramround}</span>
             </div>
-            <div className="w-[280px] bg-[#ABD1C6] rounded-[15px] h-[16px] mb-4 overflow-hidden mt-[8px]">
+            <div className="w-[280px] bg-[#ABD1C6] rounded-[15px] p-1 mb-4 overflow-hidden mt-[8px]">
               <div
                 className="border border-[#ABD1C6] bg-[#004643] h-[16px] rounded-[15px] transition-all duration-1000 ease-in-out"
                 style={{ width: `${progressPercent}%` }}
