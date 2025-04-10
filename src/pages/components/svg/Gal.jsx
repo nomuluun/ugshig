@@ -1,11 +1,10 @@
+import { useUser } from "@/pages/context/UserContext";
 import Link from "next/link";
 
 export default function Gal() {
+  const { user } = useUser();
   return (
-    <Link
-      href=""
-      className="flex flex-row  h-[35px] w-[60px] items-center"
-    >
+    <div className="flex flex-row  h-[35px] w-[60px] items-center">
       <svg
         width="35"
         height="35"
@@ -23,7 +22,7 @@ export default function Gal() {
           fill="#004643"
         />
       </svg>
-      <h1 className="text-[20px] text-[#004643] font-black ">81</h1>
-    </Link>
+      <h1 className="text-[20px] text-[#004643] font-black ">{user?.streak}</h1>
+    </div>
   );
 }

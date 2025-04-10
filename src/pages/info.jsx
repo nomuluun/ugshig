@@ -1,9 +1,9 @@
-import Dashboard from "./components/Dashboard";
+import Info from "./components/Info";
 
 export default function Home() {
   return (
     <div>
-      <Dashboard />
+      <Info />
     </div>
   );
 }
