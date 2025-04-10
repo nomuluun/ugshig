@@ -25,33 +25,21 @@ export default async function handler(req, res) {
         res.status(401).json({ message: "Invalid username or password" });
       }
     } else if (req.method === "PUT") {
-      const { _id, score, task } = req.body;
-
-      // Хэрэглэгчийн ID байгаа эсэхийг шалгах
+      const { _id, streak } = req.body;
+      console.log("req=", req.body);
       if (!_id) {
         return res.status(400).json({ error: "User ID (_id) is required" });
       }
 
-      // _id-г MongoDB-ийн ObjectId болгож хөрвүүлэх
-      let objectId;
-      try {
-        objectId = new ObjectId(_id); // Convert string to ObjectId
-      } catch (e) {
-        return res.status(400).json({ error: "Invalid User ID (_id)" });
-      }
-
-      // Шинэчлэл хийх
       const updated = await collection.updateOne(
-        { _id: objectId },
+        { _id: new ObjectId(_id) },
         {
           $set: {
-            score: score,
-            task: task,
+            streak: streak,
           },
         }
       );
 
-      // Хэрэглэгчийн мэдээлэл амжилттай шинэчлэгдсэн эсэхийг шалгах
       if (updated.modifiedCount === 1) {
         res.status(200).json({ message: "User updated successfully" });
       } else {

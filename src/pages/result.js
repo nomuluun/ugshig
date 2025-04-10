@@ -2,30 +2,71 @@ import { useScoreContext } from "./context/ScoreContext";
 import Back from "./components/svg/Back";
 import Retry from "./components/svg/Retry";
 import { useUser } from "./context/UserContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLevelContext } from "./context/LevelContext";
+import { useRouter } from "next/router";
 export default function Home() {
   const { round, setRound } = useLevelContext();
   const { user, setUser } = useUser();
   const { onoo, resultQ, level, percent } = useScoreContext();
-  const { category, setCategory } = useScoreContext();
+  const [isLoading, setIsLoading] = useState(false); // Loading state
+  console.log("userResult=", user);
+  const router = useRouter();
+  // useEffect(() => {
+  //   if (user == null) {
+  //     router.push("/");
+  //   }
+  // }, [user]);
   useEffect(() => {
-    if (onoo === percent) {
-      let updateUser = user;
-      if (round == 1) {
-        updateUser.task[1].lvl1 = true;
-        setUser(updateUser);
+    if (user != null) {
+      let updatedUser = user;
+      if (onoo === percent) {
+        if (round === 1) {
+          updatedUser.task[1].lvl1 = true;
+        }
+        if (round === 2) {
+          updatedUser.task[1].lvl2 = true;
+        }
+        if (round === 3) {
+          updatedUser.task[1].lvl3 = true;
+        }
       }
-      if (round == 2) {
-        updateUser.task[1].lvl2 = true;
-        setUser(updateUser);
-      }
-      if (round == 3) {
-        updateUser.task[1].lvl3 = true;
-        setUser(updateUser);
-      }
+
+      updatedUser.score = updatedUser.score + onoo * 8 * round; // Update the score
+
+      setIsLoading(true); // Show loading indicator before making the request
+
+      fetch("/api/user", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          _id: updatedUser._id,
+          score: updatedUser.score,
+          task: updatedUser.task,
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to update user score");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("User updated:", updatedUser);
+          setUser(updatedUser); // Update the user state
+          localStorage.setItem("user", JSON.stringify(updatedUser)); // Store updated user in localStorage
+        })
+        .catch((error) => {
+          console.error("Error updating user:", error.message); // Log the error message
+        })
+        .finally(() => {
+          setIsLoading(false); // Hide loading indicator once the request is completed
+        });
     }
-  }, []);
+  }, [user]); // Added dependencies to re-run the effect when these values change
+
   const percentage =
     (onoo * 100) / percent === 100 ? 99.99 : (onoo * 100) / percent;
   console.log(percent);
@@ -45,7 +86,21 @@ export default function Home() {
   useEffect(() => {
     // onoo = onoo * 8 * round;
   }, []);
-
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-[#194b44]">
+        <div className="text-center text-white">
+          <p className="text-lg font-semibold">
+            Updating your score, please wait...
+          </p>
+          <div className="mt-4 flex justify-center items-center">
+            {/* Loading spinner */}
+            <div className="w-16 h-16 border-4 border-t-4 border-[#f3bf66] border-solid rounded-full animate-spin"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="p-[30px] flex flex-col justify-start items-center bg-[#004643] min-h-[100vh] text-[#fff]">
       <div>

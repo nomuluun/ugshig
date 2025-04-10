@@ -16,6 +16,7 @@ export default function KheltsUg() {
   const [isAnswerClickable, setIsAnswerClickable] = useState(true);
   const [next, setNext] = useState(false); //nuhtsul
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false); // Loading state
 
   const { kheltsround, setKheltsRound } = useKheltsLevelContext();
   const { kheltsdata } = useDataKheltsContext();
@@ -27,6 +28,36 @@ export default function KheltsUg() {
       }
       if (kheltsround === 3 && score < 5) return;
       user.score = user.score + score * kheltsround * 12;
+      setIsLoading(true); // Show loading indicator before making the request
+
+      fetch("/api/user", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          _id: user._id,
+          score: user.score,
+          task: user.task,
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to update user score");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("updateUser=", user);
+          setUser(user);
+          localStorage.setItem("user", JSON.stringify(user));
+        })
+        .catch((error) => {
+          console.error("Error updating user:", error);
+        })
+        .finally(() => {
+          setIsLoading(false); // Hide loading indicator once the request is completed
+        });
     }
   }, [showFinal]);
 
@@ -114,6 +145,21 @@ export default function KheltsUg() {
   };
   // next sub
 
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-[#194b44]">
+        <div className="text-center text-white">
+          <p className="text-lg font-semibold">
+            Updating your score, please wait...
+          </p>
+          <div className="mt-4 flex justify-center items-center">
+            {/* Loading spinner */}
+            <div className="w-16 h-16 border-4 border-t-4 border-[#f3bf66] border-solid rounded-full animate-spin"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
   if (!questions.length) return null;
 
   const progressPercent = (index / 5) * 100;

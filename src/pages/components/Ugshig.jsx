@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
 import { useWordleUgContext } from "../context/WordleUgContext";
 import { useRouter } from "next/router";
+import { useUser } from "../context/UserContext";
 
 const TryNum = 6;
 export default function WordleClone() {
+  const { user, setUser } = useUser();
+
   const { asuult } = useWordleUgContext();
   const [guesses, setGuesses] = useState([]);
   const [input, setInput] = useState("");
   const [finished, setFinished] = useState(false);
   const [lost, setLost] = useState(false);
   const [index, setIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(false); // Loading state
 
   // Randomly set the word from the 'asuult' list when the component mounts
   useEffect(() => {
@@ -40,7 +44,67 @@ export default function WordleClone() {
 
     if (input === wordl) {
       setFinished(true);
+      user.streak = user.streak + 1;
+      setIsLoading(true); // Show loading indicator before making the request
+
+      fetch("/api/streak", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          _id: user._id,
+          streak: user.streak,
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to update user score");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("updateUser=", user);
+          setUser(user);
+          localStorage.setItem("user", JSON.stringify(user));
+        })
+        .catch((error) => {
+          console.error("Error updating user:", error);
+        })
+        .finally(() => {
+          setIsLoading(false); // Hide loading indicator once the request is completed
+        });
     } else if (newGuesses.length >= TryNum) {
+      user.streak = 0;
+      setIsLoading(true); // Show loading indicator before making the request
+
+      fetch("/api/streak", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          _id: user._id,
+          streak: user.streak,
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to update user score");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("updateUser=", user);
+          setUser(user);
+          localStorage.setItem("user", JSON.stringify(user));
+        })
+        .catch((error) => {
+          console.error("Error updating user:", error);
+        })
+        .finally(() => {
+          setIsLoading(false); // Hide loading indicator once the request is completed
+        });
       setFinished(true);
       setLost(true);
     }
@@ -67,7 +131,21 @@ export default function WordleClone() {
     const newRandomIndex = Math.floor(Math.random() * asuult.length);
     setIndex(newRandomIndex);
   };
-
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-[#194b44]">
+        <div className="text-center text-white">
+          <p className="text-lg font-semibold">
+            Updating your score, please wait...
+          </p>
+          <div className="mt-4 flex justify-center items-center">
+            {/* Loading spinner */}
+            <div className="w-16 h-16 border-4 border-t-4 border-[#f3bf66] border-solid rounded-full animate-spin"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="flex flex-col justify-center items-center bg-[#004643] h-[100vh] p-4 space-y-4">
       <h1 className="text-white font-extrabold text-4xl mb-10">ҮГШИГ</h1>

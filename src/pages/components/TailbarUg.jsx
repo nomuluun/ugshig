@@ -28,6 +28,7 @@ export default function TailbarUg() {
   const router = useRouter();
   const { tailbarround } = useTailbarLevelContext();
   const { tailbardata } = useDataTailbarContext();
+  const [isLoading, setIsLoading] = useState(false); // Loading state
 
   const sensors = useSensors(useSensor(PointerSensor)); // Touch + Mouse support
 
@@ -36,6 +37,37 @@ export default function TailbarUg() {
       if (score === 16) user.task[2][`lvl${tailbarround}`] = true;
       if (tailbarround === 3 && score < 16) return;
       user.score += score * tailbarround * 5;
+
+      setIsLoading(true); // Show loading indicator before making the request
+
+      fetch("/api/user", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          _id: user._id,
+          score: user.score,
+          task: user.task,
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to update user score");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("updateUser=", user);
+          setUser(user);
+          localStorage.setItem("user", JSON.stringify(user));
+        })
+        .catch((error) => {
+          console.error("Error updating user:", error);
+        })
+        .finally(() => {
+          setIsLoading(false); // Hide loading indicator once the request is completed
+        });
     }
   }, [showFinal]);
 
@@ -150,7 +182,21 @@ export default function TailbarUg() {
   };
 
   const progressPercent = showFinal ? 100 : (currentIndex / 16) * 100;
-
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-[#194b44]">
+        <div className="text-center text-white">
+          <p className="text-lg font-semibold">
+            Updating your score, please wait...
+          </p>
+          <div className="mt-4 flex justify-center items-center">
+            {/* Loading spinner */}
+            <div className="w-16 h-16 border-4 border-t-4 border-[#f3bf66] border-solid rounded-full animate-spin"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen bg-[#004643]">
       {!showFinal ? (
