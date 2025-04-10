@@ -241,40 +241,47 @@ export default function Duremnuhuh() {
                 Буруу сонгосон үгс:
               </h3>
 
-              <table className="w-full text-left border border-[#ABD1C6] rounded-lg overflow-hidden">
-                <thead className="bg-[#256353]">
-                  <tr>
-                    <th className="py-2 px-4 border-b border-[#ABD1C6]">
-                      Тайлбар
-                    </th>
-                    <th className="py-2 px-4 border-b border-[#ABD1C6]">
-                      Таны сонгосон
-                    </th>
-                    <th className="py-2 px-4 border-b border-[#ABD1C6]">
-                      Зөв үг
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {userAnswers
-                    .filter((ans) => ans.selected.result !== ans.correct.result)
-                    .map((ans, idx) => (
-                      <tr key={idx} className="bg-[#12352f] hover:bg-[#17493f]">
-                        <td className="py-2 px-4 border-b border-[#ABD1C6]">
-                          {ans.question.tailbar}
-                        </td>
-                        <td className="py-2 px-4 border-b border-[#ABD1C6] text-red-400 font-semibold">
-                          {ans.selected.result == -1
-                            ? "Songoogui"
-                            : ans.selected.result}
-                        </td>
-                        <td className="py-2 px-4 border-b border-[#ABD1C6] text-green-400 font-semibold">
-                          {ans.correct.result}
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border border-[#ABD1C6] rounded-lg overflow-hidden min-w-[600px]">
+                  <thead className="bg-[#256353] text-white">
+                    <tr>
+                      <th className="py-2 px-4 border-b border-[#ABD1C6]">
+                        Тайлбар
+                      </th>
+                      <th className="py-2 px-4 border-b border-[#ABD1C6]">
+                        Таны сонгосон
+                      </th>
+                      <th className="py-2 px-4 border-b border-[#ABD1C6]">
+                        Зөв үг
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {userAnswers
+                      .filter(
+                        (ans) => ans.selected.result !== ans.correct.result
+                      )
+                      .map((ans, idx) => (
+                        <tr
+                          key={idx}
+                          className="bg-[#12352f] hover:bg-[#17493f] text-white"
+                        >
+                          <td className="py-2 px-4 border-b border-[#ABD1C6]">
+                            {ans.question.tailbar}
+                          </td>
+                          <td className="py-2 px-4 border-b border-[#ABD1C6] text-red-400 font-semibold">
+                            {ans.selected.result === -1
+                              ? "Сонгоогүй"
+                              : ans.selected.result}
+                          </td>
+                          <td className="py-2 px-4 border-b border-[#ABD1C6] text-green-400 font-semibold">
+                            {ans.correct.result}
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
             </>
           )}
           <div className="flex justify-between">

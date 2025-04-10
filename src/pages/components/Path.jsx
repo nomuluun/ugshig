@@ -30,40 +30,87 @@ export default function Path({ props, lvl }) {
   }, [user]);
   function handleTask(ind) {
     // console.log("task=", task);
-
     if (task.id == "aldaaUg") {
-      setCategory("aldaaUg");
-      setRound(ind);
-      router.push("/uguulber");
+      if (
+        (ind == 1 && task.lvl1) ||
+        (ind == 2 && task.lvl2) ||
+        (ind == 3 && task.lvl3)
+      ) {
+        setCategory("aldaaUg");
+        setRound(ind);
+        router.push("/uguulber");
+      } else {
+        alert("Tugjeetei");
+      }
     }
     if (task.id == "juramUg") {
-      setCategory("juramUg");
-      setJuramRound(ind);
-      router.push("/juram");
+      if (
+        (ind == 1 && task.lvl1) ||
+        (ind == 2 && task.lvl2) ||
+        (ind == 3 && task.lvl3)
+      ) {
+        setCategory("juramUg");
+        setJuramRound(ind);
+        router.push("/juram");
+      } else {
+        alert("Tugjeetei");
+      }
     }
     if (task.id == "ugHargalzuulah") {
-      setCategory("ugHargalzuulah");
-      // alert("hi");
-      setTailbarRound(ind);
-      router.push("/tailbarug");
+      if (
+        (ind == 1 && task.lvl1) ||
+        (ind == 2 && task.lvl2) ||
+        (ind == 3 && task.lvl3)
+      ) {
+        setCategory("ugHargalzuulah");
+        // alert("hi");
+        setTailbarRound(ind);
+        router.push("/tailbarug");
+      } else {
+        alert("Tugjeetei");
+      }
     }
     if (task.id == "heltsUg") {
-      // alert("hi");
-      setCategory("heltsUg");
-      setKheltsRound(ind);
-      router.push("/heltsug");
+      if (
+        (ind == 1 && task.lvl1) ||
+        (ind == 2 && task.lvl2) ||
+        (ind == 3 && task.lvl3)
+      ) {
+        // alert("hi");
+        setCategory("heltsUg");
+        setKheltsRound(ind);
+        router.push("/heltsug");
+      } else {
+        alert("Tugjeetei");
+      }
     }
     if (task.id == "zuvUg") {
-      setCategory("heltsUg");
-      // alert("hi");
-      setJuramRound(ind);
-      router.push("/zuvug");
+      if (
+        (ind == 1 && task.lvl1) ||
+        (ind == 2 && task.lvl2) ||
+        (ind == 3 && task.lvl3)
+      ) {
+        setCategory("heltsUg");
+        // alert("hi");
+        setJuramRound(ind);
+        router.push("/zuvug");
+      } else {
+        alert("Tugjeetei");
+      }
     }
     if (task.id == "duremNuhuh") {
-      setCategory("duremNuhuh");
-      // alert("hi");
-      setKheltsRound(ind);
-      router.push("/duremnuhuh");
+      if (
+        (ind == 1 && task.lvl1) ||
+        (ind == 2 && task.lvl2) ||
+        (ind == 3 && task.lvl3)
+      ) {
+        setCategory("duremNuhuh");
+        // alert("hi");
+        setKheltsRound(ind);
+        router.push("/duremnuhuh");
+      } else {
+        alert("Tugjeetei");
+      }
     }
     // if (task.id == "")
   }
