@@ -206,7 +206,7 @@ export default function Duremnuhuh() {
                   <button
                     key={ind}
                     onClick={() => resTime(data.score, ind)}
-                    className={`py-3 px-4 rounded-xl font-semibold text-black transition-colors ${buttonColor}`}
+                    className={`py-3 px-4 bg-[#fff] rounded-xl font-semibold text-black transition-colors ${buttonColor}`}
                     disabled={!isAnswerClickable} // Disable button when timer runs out
                   >
                     {data.result}
