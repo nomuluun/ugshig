@@ -3,6 +3,7 @@ import { useJuramLevelContext } from "../context/JuramLevelContext";
 import { useUser } from "../context/UserContext";
 import { useRouter } from "next/router";
 import { useDataDuremUgContext } from "../context/data/DataDuremUg";
+import Menu from "./Menu";
 
 export default function Zuvug() {
   const { user, setUser } = useUser();
@@ -164,7 +165,8 @@ export default function Zuvug() {
   const progressPercent = (index / 5) * 100;
 
   return (
-    <div className="min-h-screen bg-[#194b44] flex flex-col items-center justify-center">
+    <div className="min-h-screen bg-[#194b44] flex flex-col items-center justify-center ">
+      <Menu />
       {!showFinal ? (
         <div>
           <div className="flex flex-col p-4 text-white rounded-b-3xl text-center items-center justify-center">
@@ -269,12 +271,7 @@ export default function Zuvug() {
             </>
           )}
           <div className="flex justify-between">
-            <button
-              onClick={() => window.location.reload()}
-              className="text-[#F2C26B] font-black text-15px px-6 py-2 hover:opacity-90"
-            >
-              <h1>ДАХИН ОРОЛДОХ</h1>
-            </button>
+            <div></div>
             <button
               onClick={() => router.push("/durem")}
               className="mt-4 text-[#f3bf66] text-sm font-bold self-start"

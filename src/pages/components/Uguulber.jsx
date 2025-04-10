@@ -4,6 +4,7 @@ import { useScoreContext } from "../context/ScoreContext";
 import { useLevelContext } from "../context/LevelContext";
 import { useAldaataiUgContext } from "../context/AldaataiUgContext";
 import { useUser } from "../context/UserContext";
+import Menu from "./Menu";
 export default function Uguulber() {
   const { asuult } = useAldaataiUgContext();
   const { user, setUser } = useUser();
@@ -35,7 +36,14 @@ export default function Uguulber() {
     setResultQ([]);
     setIndex(a);
   }, []);
-
+  function backPage() {
+    a = Math.floor(Math.random() * b.length);
+    setpercent(data[a].result.length);
+    setOnoo(0);
+    setResultQ([]);
+    setIndex(a);
+    router.push("/");
+  }
   const progressPercent = ((2 - qnum) / 3) * 100;
   useEffect(() => {
     if (round === 1) return;
@@ -127,9 +135,9 @@ export default function Uguulber() {
   };
 
   return (
-    <div className="p-[20px] flex flex-col justify-center items-center bg-[#004643] min-h-[100vh] text-[#fff]">
+    <div className="p-[20px] flex flex-col justify-center items-center  bg-[#004643] min-h-[100vh] text-[#fff]">
       <div className="max-w-[600px] w-full">
-        <div className="flex justify-between py-10">
+        <div className="flex justify-between py-5">
           <h1 className="text-[23px] font-black">АЛДААТАЙ ҮГС</h1>
           <h1 className="text-[23px] font-black">{`ТҮВШИН : ${round}`}</h1>
         </div>
@@ -169,11 +177,19 @@ export default function Uguulber() {
                 />
               </div>
             ))}
-            <input
-              className="text-xl bg-[#F9BC60] py-2 px-4 rounded-[20px] mt-4 text-[#333] cursor-pointer ml-auto mr-4 block"
-              type="submit"
-              value="Дараах"
-            />
+            <div className="flex justify-between w-full ">
+              <button
+                className="text-xl bg-[#F9BC60] py-2 px-4 rounded-[20px] my-4 text-[#333] cursor-pointer  block"
+                onClick={backPage}
+              >
+                Гарах
+              </button>
+              <input
+                className="text-xl bg-[#F9BC60] py-2 px-4 rounded-[20px] my-4 text-[#333] cursor-pointer  block"
+                type="submit"
+                value="Дараах"
+              />
+            </div>
           </form>
         )}
       </div>

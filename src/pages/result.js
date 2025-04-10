@@ -12,6 +12,23 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false); // Loading state
   console.log("userResult=", user);
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    if (user === null) {
+      router.push("/login");
+    } else {
+      setLoading(false);
+    }
+  }, [user]);
+  if (loading) {
+    return (
+      <div className="flex items-center bg-teal-900 justify-center h-screen">
+        <div className="text-xl font-semibold animate-pulse text-gray-500">
+          Ачаалж байна...
+        </div>
+      </div>
+    );
+  }
   // useEffect(() => {
   //   if (user == null) {
   //     router.push("/");

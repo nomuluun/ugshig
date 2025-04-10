@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useWordleUgContext } from "../context/WordleUgContext";
 import { useRouter } from "next/router";
 import { useUser } from "../context/UserContext";
+import Menu from "./Menu";
 
 const TryNum = 6;
 export default function WordleClone() {
@@ -145,7 +146,10 @@ export default function WordleClone() {
     );
   }
   return (
-    <div className="flex flex-col justify-center items-center bg-[#004643] h-[100vh] p-4 space-y-4">
+    <div className="flex flex-col justify-center items-center bg-[#004643] h-[100vh] ">
+      <div className="fixed top-0 w-full">
+        <Menu />
+      </div>
       <h1 className="text-white font-extrabold text-4xl mb-10">ҮГШИГ</h1>
 
       <input
@@ -192,7 +196,7 @@ export default function WordleClone() {
           </p>
         </div>
       )}
-      <div className="flex justify-between items-center w-[320px]">
+      <div className="flex mt-10 justify-between items-center w-[320px]">
         <button
           onClick={closeModal}
           className="text-white bg-[#004643] p-2 rounded-md font-extrabold"
@@ -222,7 +226,7 @@ export default function WordleClone() {
             <p className="text-[#004643] text-3xl font-extrabold mb-1">
               Үгийн тайлбар:
             </p>
-            <p className="text-[#004643] text-3xl font-semibold mb-4">
+            <p className="text-white text-3xl font-semibold mb-4">
               {formattedDef}
             </p>
             <button

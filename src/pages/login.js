@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useUser } from "./context/UserContext";
+import Logo from "./components/svg/Logo";
 
 export default function Login() {
   const { user, setUser } = useUser();
@@ -46,8 +47,12 @@ export default function Login() {
   };
 
   return (
-    <div className="h-[100vh] w-full flex justify-center items-center bg-[#f0f4f8] dark:bg-[#1a202c]">
-      <div className="bg-white p-8 rounded-xl shadow-md max-w-md w-full dark:bg-[#2D3748] dark:text-white">
+    <div className="h-[100vh] w-full flex flex-col p-10 justify-center items-center bg-teal-900">
+      <div className="mb-8 drop-shadow-[0_0_10px_white] hover:drop-shadow-[0_0_20px_white] transition-all duration-300 ease-in-out text-center">
+        <Logo className="w-32 h-32 mx-auto" />
+      </div>
+
+      <div className="bg-white m-8 p-8 rounded-xl shadow-md max-w-md w-full dark:bg-[#2D3748] dark:text-white">
         <h1 className="text-3xl font-semibold text-center text-[#333] mb-6 dark:text-white">
           Нэвтрэх
         </h1>

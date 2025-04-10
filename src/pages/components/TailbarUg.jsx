@@ -300,12 +300,7 @@ function FinalResult({ score, wrongAnswers, router }) {
         </div>
       )}
       <div className="flex justify-between w-[670px]">
-        <button
-          onClick={() => window.location.reload()}
-          className="text-[#F2C26B] font-black text-15px px-6 py-2 hover:opacity-90"
-        >
-          ДАХИН ОРОЛДОХ
-        </button>
+        <div></div>
         <button
           onClick={() => router.push("/ugutga")}
           className="text-[#F2C26B] font-black text-15px px-6 py-2 hover:opacity-90"
