@@ -142,7 +142,7 @@ export default function Uguulber() {
           <h1 className="text-[23px] font-black">{`ТҮВШИН : ${round}`}</h1>
         </div>
         <div className="flex justify-center items-center w-full">
-          <div className="w-[560px] bg-[#ABD1C6] rounded-[15px] h-[16px] mb-4 overflow-hidden mt-[8px]">
+          <div className="w-[560px] bg-[#ABD1C6] rounded-[15px] p-2 mb-4 overflow-hidden mt-[8px]">
             <div
               className="border border-[#ABD1C6] bg-[#004643] h-[16px] rounded-[15px] transition-all duration-1000 ease-in-out"
               style={{ width: `${progressPercent}%` }}
