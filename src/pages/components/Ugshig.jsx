@@ -5,18 +5,19 @@ import { useUser } from "../context/UserContext";
 import Menu from "./Menu";
 
 const TryNum = 6;
+
 export default function WordleClone() {
   const { user, setUser } = useUser();
-
   const { asuult } = useWordleUgContext();
   const [guesses, setGuesses] = useState([]);
   const [input, setInput] = useState("");
   const [finished, setFinished] = useState(false);
   const [lost, setLost] = useState(false);
   const [index, setIndex] = useState(0);
-  const [isLoading, setIsLoading] = useState(false); // Loading state
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Randomly set the word from the 'asuult' list when the component mounts
+  const router = useRouter();
+
   useEffect(() => {
     if (asuult.length > 0) {
       const randomIndex = Math.floor(Math.random() * asuult.length);
@@ -24,11 +25,11 @@ export default function WordleClone() {
     }
   }, [asuult]);
 
-  // Get the word and definition for the current game
   const wordl = asuult[index]?.word?.toUpperCase() || "";
   const def = asuult[index]?.definition || "";
   const Wlength = wordl.length;
   const formattedDef = def.charAt(0).toUpperCase() + def.slice(1);
+
   const handleChange = (e) => {
     if (finished) return;
     const val = e.target.value.toUpperCase();
@@ -36,94 +37,56 @@ export default function WordleClone() {
       setInput(val);
     }
   };
-  const router = useRouter();
+
+  const updateStreak = async (newStreak) => {
+    setIsLoading(true);
+    try {
+      const response = await fetch("/api/streak", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          _id: user._id,
+          streak: newStreak,
+        }),
+      });
+      if (!response.ok) throw new Error("Failed to update streak");
+      const updatedUser = { ...user, streak: newStreak };
+      setUser(updatedUser);
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+    } catch (error) {
+      console.error("Error updating user:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleEnter = () => {
     if (input.length !== Wlength || finished) return;
+
     const newGuesses = [...guesses, input];
     setGuesses(newGuesses);
     setInput("");
 
     if (input === wordl) {
       setFinished(true);
-      user.streak = user.streak + 1;
-      setIsLoading(true); // Show loading indicator before making the request
-
-      fetch("/api/streak", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          _id: user._id,
-          streak: user.streak,
-        }),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Failed to update user score");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          console.log("updateUser=", user);
-          setUser(user);
-          localStorage.setItem("user", JSON.stringify(user));
-        })
-        .catch((error) => {
-          console.error("Error updating user:", error);
-        })
-        .finally(() => {
-          setIsLoading(false); // Hide loading indicator once the request is completed
-        });
+      updateStreak(user.streak + 1);
     } else if (newGuesses.length >= TryNum) {
-      user.streak = 0;
-      setIsLoading(true); // Show loading indicator before making the request
-
-      fetch("/api/streak", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          _id: user._id,
-          streak: user.streak,
-        }),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Failed to update user score");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          console.log("updateUser=", user);
-          setUser(user);
-          localStorage.setItem("user", JSON.stringify(user));
-        })
-        .catch((error) => {
-          console.error("Error updating user:", error);
-        })
-        .finally(() => {
-          setIsLoading(false); // Hide loading indicator once the request is completed
-        });
       setFinished(true);
       setLost(true);
+      updateStreak(user.streak);
     }
   };
 
-  // Function to reset the game and choose a new word
   const closeModal = () => {
     setFinished(false);
     setLost(false);
     setGuesses([]);
     setInput("");
-    // Optionally re-randomize word
     const newRandomIndex = Math.floor(Math.random() * asuult.length);
     setIndex(newRandomIndex);
     router.back();
   };
 
-  // Function to return to the start of the game (exit current game)
   const returnToStart = () => {
     setFinished(false);
     setLost(false);
@@ -132,19 +95,20 @@ export default function WordleClone() {
     const newRandomIndex = Math.floor(Math.random() * asuult.length);
     setIndex(newRandomIndex);
   };
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-[#004643]">
         <div className="text-center text-white">
           <p className="text-lg font-semibold">Уншиж байна...</p>
           <div className="mt-4 flex justify-center items-center">
-            {/* Loading spinner */}
             <div className="w-16 h-16 border-4 border-t-4 border-[#f3bf66] border-solid rounded-full animate-spin"></div>
           </div>
         </div>
       </div>
     );
   }
+
   return (
     <div className="flex flex-col justify-center items-center bg-[#004643] h-[100vh] ">
       <div className="fixed top-0 w-full">
@@ -186,6 +150,7 @@ export default function WordleClone() {
           );
         })}
       </div>
+
       {finished && !lost && (
         <div className="px-4 sm:px-6 lg:px-8 py-6">
           <h1 className="text-white font-extrabold text-center text-2xl sm:text-3xl lg:text-4xl mb-4 sm:mb-6">
@@ -196,6 +161,7 @@ export default function WordleClone() {
           </p>
         </div>
       )}
+
       <div className="flex mt-10 justify-between items-center w-[320px]">
         <button
           onClick={closeModal}
@@ -213,6 +179,7 @@ export default function WordleClone() {
           </button>
         )}
       </div>
+
       {finished && lost && (
         <div className="fixed inset-0 flex justify-center items-center">
           <div className="absolute w-full h-[100vh] top-0 z-[-1] bg-black opacity-70"></div>
@@ -231,7 +198,7 @@ export default function WordleClone() {
             </p>
             <button
               onClick={closeModal}
-              className="text-xl text-white bg-[#004643] text-black p-2 rounded-md font-extrabold mt-6"
+              className="text-xl text-white bg-[#004643]  p-2 rounded-md font-extrabold mt-6"
             >
               Хаах
             </button>
