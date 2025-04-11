@@ -82,9 +82,6 @@ export default function Result() {
   A${r} ${r} 0 ${largeArc} 1 ${x} ${y}
   Z
 `;
-  useEffect(() => {
-    // onoo = onoo * 8 * round;
-  }, []);
   if (isLoading) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-[#004643]">
