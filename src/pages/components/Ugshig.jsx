@@ -187,11 +187,11 @@ export default function WordleClone() {
         })}
       </div>
       {finished && !lost && (
-        <div>
-          <h1 className="text-white flex items-center justify-center font-extrabold text-3xl mb-5 mt-5">
+        <div className="px-4 sm:px-6 lg:px-8 py-6">
+          <h1 className="text-white font-extrabold text-center text-2xl sm:text-3xl lg:text-4xl mb-4 sm:mb-6">
             Үгийн тайлбар
           </h1>
-          <p className="text-white flex items-center justify-center text-2xl mb-10">
+          <p className="text-white text-center text-lg sm:text-xl lg:text-2xl leading-relaxed max-w-3xl mx-auto">
             {formattedDef}
           </p>
         </div>
