@@ -148,8 +148,12 @@ export default function Result() {
             </tbody>
           </table>
           <div className="flex flex-row justify-between items-center px-4  mt-6">
-            <Retry />
-            <Back />
+            <button
+              onClick={() => router.push("/ugshig")}
+              className="mt-4 text-[#f3bf66] text-sm font-bold self-start"
+            >
+              ← ГАРАХ
+            </button>
           </div>
         </div>
       </div>
